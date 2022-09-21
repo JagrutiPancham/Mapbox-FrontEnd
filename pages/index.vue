@@ -13,11 +13,12 @@
     </main>
 </template>
 <script setup lang="ts" >
-  import MapboxglGeocoder from "@mapbox/mapbox-gl-geocoder";
-  import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
-
-import mapboxgl from 'mapbox-gl';    
+import MapboxglGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
+import mapboxgl from 'mapbox-gl';  
+import MapboxDraw from "@mapbox/mapbox-gl-draw";  
 import VMap from 'v-mapbox';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 
 mapboxgl.accessToken="pk.eyJ1IjoiamFncnV0aXBhbmNoYW0iLCJhIjoiY2w2Zzg1enoxMDFsMDNkdHVzNTZnY3V4YiJ9.cqnFY35YmBR6HfS8A1w7xA"
   const state = reactive({
@@ -63,6 +64,11 @@ async function OnMapLoaded(map){
   map.addControl(
     new mapboxgl.NavigationControl()
   );
+
+
+var Draw = new MapboxDraw();
+map.addControl(Draw, 'top-left');
+
 
 map.addSource('Nagpur', {
 'type': 'geojson',
@@ -168,43 +174,3 @@ map.addSource('Nagpur', {
     width: 100%;
   }
   </style>
-
-//<<<----------Upload file-------->>>
-  //const map = []; 
-  //  async function OnClick(event){
-  //   console.log("file is uploaded");
-  //   await $fetch("http://localhost:3001/map/upload",{
-  //     method: "POST",
-  //     body: JSON.stringify(data.Geolocation),      
-  //   });
-  // }
-
-
-  // const layers = map.getStyle().layers;
-
-// let firstSymbolId;
-// for (const layer of layers) {
-// if (layer.type === 'symbol') {
-// firstSymbolId = layer.id;
-// break;
-// }
-// }
-
-// map.addSource('urban-areas', {
-// 'type': 'geojson',
-// 'data': 'https://docs.mapbox.com/mapbox-gl-js/assets/ne_50m_urban_areas.geojson'
-// });
-// map.addLayer(
-// {
-// 'id': 'urban-areas-fill',
-// 'type': 'fill',
-// 'source': 'urban-areas',
-// 'layout': {},
-// 'paint': {
-// 'fill-color': '#f02',
-// 'fill-opacity': 0.1
-// }
-
-// },
-// firstSymbolId
-// );
